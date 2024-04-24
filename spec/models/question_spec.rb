@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Question, type: :model do
   describe 'associations' do
-    it 'has many answers' do
-      association = described_class.reflect_on_association(:answers)
-      expect(association.macro).to eq :has_many
-    end
+    it { should have_many(:answers) }
   end
   describe 'validations' do
     it { should validate_presence_of :title }
