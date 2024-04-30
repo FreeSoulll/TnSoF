@@ -93,8 +93,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'do not change question' do
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyString'
+        expect(question).to have_attributes(title: 'MyString', body: 'MyString')
       end
 
       it 're-render edit view' do
