@@ -60,13 +60,19 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'with valid attributes' do
+      subject { post :create, params: { question: attributes_for(:question) } }
       it 'saved a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show view' do
-        post :create, params: { question: attributes_for(:question) }
+        subject
         expect(response).to redirect_to assigns(:question)
+      end
+
+      it 'saved a new question in the database with user as author' do
+        subject
+        expect(user).to be_author_of(Question.last)
       end
     end
 

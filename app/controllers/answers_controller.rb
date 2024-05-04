@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[new show edit update destroy]
+  before_action :find_question, only: %i[create]
+  before_action :find_answer, only: %i[edit update destroy]
 
   def index; end
 
@@ -18,7 +18,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created'
     else
-      redirect_to @question, notice: 'Check the form fields'
+      render 'questions/show'
     end
   end
 
@@ -32,15 +32,16 @@ class AnswersController < ApplicationController
 
   def destroy
     question = @answer.question
-    @answer.destroy if current_user.author?(@answer)
+    notice = current_user.author_of?(@answer) ? 'Your answer successfully delete' : 'Your answer not delete'
 
-    redirect_to question, notice: 'Your answer successfully delete'
+    @answer.destroy if current_user.author_of?(@answer)
+    redirect_to question, notice: notice
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id)
+    params.require(:answer).permit(:body)
   end
 
   def find_question

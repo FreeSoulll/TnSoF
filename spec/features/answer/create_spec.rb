@@ -25,13 +25,13 @@ feature 'User can create', %q{
     scenario 'create a answer with error' do
       click_on 'Create answer'
 
-      expect(page).to have_content 'Check the form fields'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
   scenario 'Unauthenticated user tries to create a answer' do
     visit question_path(question.id)
 
-    expect(page).to_not have_content 'Create answer'
+    expect(page).to have_content 'Login'
   end
 end

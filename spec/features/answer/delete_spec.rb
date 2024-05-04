@@ -26,6 +26,7 @@ feature 'User can delete', %q{
       click_on 'Delete answer'
 
       expect(page).to have_content answer.body
+      expect(page).to have_content 'Your answer not delete'
     end
   end
 

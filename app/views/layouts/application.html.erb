@@ -10,6 +10,13 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <header>
+    <% unless user_signed_in? %>
+      <%= link_to 'Register', new_user_registration_path %>
+      <%= link_to 'Login', user_session_path %>
+    <% end %>
+  </header>
+
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

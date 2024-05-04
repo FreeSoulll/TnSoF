@@ -30,6 +30,11 @@ RSpec.describe AnswersController, type: :controller do
         subject
         expect(response).to redirect_to question_path(question.id)
       end
+
+      it 'saved a new question in the database with user as author' do
+        subject
+        expect(user).to be_author_of(Answer.last)
+      end
     end
 
     context 'with invalid attributes' do
