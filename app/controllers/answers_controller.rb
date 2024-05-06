@@ -3,31 +3,12 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[edit update destroy]
 
-  def index; end
-
-  def show; end
-
-  def new; end
-
-  def edit; end
-
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created'
-    else
-      render 'questions/show'
-    end
+    @answer = @question.answers.create(answer_params.merge(user: current_user, question: @question))
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer
-    else
-      render :edit
-    end
+    @answer.update(answer_params)
   end
 
   def destroy

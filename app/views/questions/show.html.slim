@@ -1,16 +1,18 @@
 h1= @question.title
 p= @question.body
 
-
 - if user_signed_in?
   p= button_to 'Delete question',
               question_path(@question),
               method: :delete,
               data: {confirm: 'Are you sure?'}
 
-    
+h2= 'Answers'
+.answers
+  = render @question.answers
+
+
+- if user_signed_in?
   h3= 'Create answer'
   = render 'answers/form'
 
-h2= 'Answers'
-= render @question.answers
