@@ -18,12 +18,11 @@ feature 'User can delete', %q{
       expect(page).to_not have_content question.title
     end
 
-    scenario 'not author delete a question' do
+    scenario 'not author cant delete a question' do
       sign_in(user)
       visit question_path(question.id)
-      click_on 'Delete question'
 
-      expect(page).to have_content question.title
+      expect(page).to_not have_content 'Delete question'
     end
   end
 

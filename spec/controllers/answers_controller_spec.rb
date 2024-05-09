@@ -50,7 +50,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    let(:author) { create(:user) }
+    let(:answer) { create(:answer, question: question, user: author) }
+    before { login(author) }
 
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
@@ -84,6 +86,15 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :update
       end
     end
+
+    context 'Not valid author' do
+      before { login(user) }
+
+      it 'not update the answer' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        expect(answer.body).to eq 'MyText'
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
@@ -92,20 +103,14 @@ RSpec.describe AnswersController, type: :controller do
     before { login(author) }
 
     it 'delete the answer' do
-      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
-    end
-
-    it 'redirect to question' do
-      delete :destroy, params: { id: answer }
-
-      expect(response).to redirect_to question_path(question.id)
+      expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
 
     context 'Not valid author' do
       before { login(user) }
 
       it 'not delete the answer' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
       end
     end
   end

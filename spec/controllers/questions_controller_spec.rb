@@ -90,7 +90,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    before { login(author) }
+    let(:author) { create(:user) }
+    let(:question) { create(:question, user: author) }
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
@@ -99,7 +101,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body'} }
         question.reload
 
         expect(question.title).to eq 'new title'
@@ -125,6 +127,15 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+
+    context 'Not valid author' do
+      before { login(user) }
+
+      it 'not update the question' do
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        expect(question).to have_attributes(title: 'MyString', body: 'MyString')
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
@@ -148,6 +159,28 @@ RSpec.describe QuestionsController, type: :controller do
       it 'not delete the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
+    end
+  end
+
+  describe 'PATCH #set_the_best_answer' do
+    let(:author) { create(:user) }
+    before { login(author) }
+    let(:question) { create(:question, user: author) }
+    let(:answer) { create(:answer, question: question, user: author) }
+
+    it 'make answer a best' do
+      patch :set_the_best_answer, params: { id: question, best_answer_id: answer.id }, format: :js
+      question.reload
+
+      expect(question).to have_attributes(best_answer_id: answer.id)
+    end
+
+    it 'try a make answer a best to another author' do
+      login(user)
+      patch :set_the_best_answer, params: { id: question, best_answer_id: answer.id }, format: :js
+      question.reload
+
+      expect(question).to have_attributes(best_answer_id: nil)
     end
   end
 end

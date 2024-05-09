@@ -1,17 +1,24 @@
 - if answer.persisted?
-  p= answer.body
+  .answer class="answer-#{answer.id}"
+    p= answer.body
 
-  - if user_signed_in?
-    p= link_to 'Edit'
+    -if current_user&.author_of?(answer)
+      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-    = form_with model: answer do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
+      -if current_user.author_of?(@question)
+        = link_to 'Mark the best',
+                set_the_best_answer_question_path(@question, best_answer_id: answer.id ),
+                method: :patch,
+                remote: true 
 
-      p= f.submit 'Save'
+      .errors
+      = form_with model: answer, class: 'hidden', local: false, html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Your answer'
+        = f.text_area :body
 
-    p= button_to 'Delete answer',
-            answer_path(answer),
-            remote: true,
-            method: :delete,
-            data: {confirm: 'Are you sure?'}
+        p= f.submit 'Save'
+
+      p= button_to 'Delete answer',
+              answer_path(answer),
+              remote: true,
+              method: :delete

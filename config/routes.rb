@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, shallow: true
+    patch :set_the_best_answer, on: :member
   end
 end

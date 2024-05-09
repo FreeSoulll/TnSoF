@@ -8,15 +8,14 @@ class AnswersController < ApplicationController
   end
 
   def update
+    return redirect_to(@answer.question) unless current_user.author_of?(@answer)
+
     @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
-    question = @answer.question
-    notice = current_user.author_of?(@answer) ? 'Your answer successfully delete' : 'Your answer not delete'
-
     @answer.destroy if current_user.author_of?(@answer)
-    redirect_to question, notice: notice
   end
 
   private
