@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy set_the_best_answer]
-  before_action :other_answers, only: %i[show set_the_best_answer]
+  before_action :load_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -9,6 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
     @best_answer = @question.best_answer
   end
 
@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    return unless current_user.author_of?(@question)
+    return redirect_to(@question) unless current_user.author_of?(@question)
 
     if @question.update(question_params)
       redirect_to @question
@@ -40,8 +40,11 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(@question)
-    redirect_to questions_path
+    if current_user.author_of?(@question)
+      @question.update(best_answer_id: nil)
+      @question.destroy
+      redirect_to questions_path
+    end
   end
 
   def set_the_best_answer
@@ -52,10 +55,6 @@ class QuestionsController < ApplicationController
   end
 
   private
-
-  def other_answers
-    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
-  end
 
   def load_question
     @question = Question.find(params[:id])

@@ -7,8 +7,8 @@
 
       -if current_user.author_of?(@question)
         = link_to 'Mark the best',
-                set_the_best_answer_question_path(@question, best_answer_id: answer.id ),
-                method: :patch,
+                question_best_answer_path(@question, best_answer_id: answer.id ),
+                method: :post,
                 remote: true 
 
       .errors

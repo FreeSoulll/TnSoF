@@ -8,10 +8,10 @@ p= @question.body
               data: {confirm: 'Are you sure?'}
 
   .current-best-answer
-  - if @best_answer.present?
-    h3= 'BEST ANSWER'
-    span
-      = @best_answer.body
+    - if @question.best_answer_id.present?
+      h3= 'BEST ANSWER'
+      span
+        = @best_answer.body
 
 h2= 'Answers'
 .answers

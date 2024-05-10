@@ -1,6 +1,6 @@
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
-  belongs_to :best_answer, class_name: 'Answer', optional: true
+  has_one :best_answer, class_name: 'Answer', dependent: :destroy
   belongs_to :user
 
   validates :title, :body, presence: true

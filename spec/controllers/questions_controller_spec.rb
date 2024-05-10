@@ -134,6 +134,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'not update the question' do
         patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
         expect(question).to have_attributes(title: 'MyString', body: 'MyString')
+        expect(response).to redirect_to assigns(:question)
       end
     end
   end
@@ -159,28 +160,6 @@ RSpec.describe QuestionsController, type: :controller do
       it 'not delete the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
-    end
-  end
-
-  describe 'PATCH #set_the_best_answer' do
-    let(:author) { create(:user) }
-    before { login(author) }
-    let(:question) { create(:question, user: author) }
-    let(:answer) { create(:answer, question: question, user: author) }
-
-    it 'make answer a best' do
-      patch :set_the_best_answer, params: { id: question, best_answer_id: answer.id }, format: :js
-      question.reload
-
-      expect(question).to have_attributes(best_answer_id: answer.id)
-    end
-
-    it 'try a make answer a best to another author' do
-      login(user)
-      patch :set_the_best_answer, params: { id: question, best_answer_id: answer.id }, format: :js
-      question.reload
-
-      expect(question).to have_attributes(best_answer_id: nil)
     end
   end
 end

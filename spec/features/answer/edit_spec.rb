@@ -23,7 +23,8 @@ feature 'User can edit his answer', %q{
     end
 
     scenario 'edit his answer', js: true do
-      within ".answers" do
+      save_and_open_page
+      within ".answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
@@ -35,7 +36,7 @@ feature 'User can edit his answer', %q{
     end
 
     scenario 'edits his answer with errors', js: true do
-      within ".answers" do
+      within ".answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: ''
         click_on 'Save'
@@ -50,7 +51,7 @@ feature 'User can edit his answer', %q{
     sign_in(user)
     visit question_path(question)
 
-    within ".answers" do
+    within ".answer-#{answer.id}" do
       expect(page).to have_no_content 'Edit'
     end
   end
