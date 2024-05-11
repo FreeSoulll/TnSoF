@@ -44,6 +44,8 @@ class QuestionsController < ApplicationController
       @question.update(best_answer_id: nil)
       @question.destroy
       redirect_to questions_path
+    else
+      redirect_to @question, notice: 'Not author cant delete the question'
     end
   end
 
