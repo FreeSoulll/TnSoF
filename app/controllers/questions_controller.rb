@@ -7,7 +7,9 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.new
+    @answer = Answer.new
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
+    @best_answer = @question.best_answer
   end
 
   def new
@@ -28,6 +30,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    return redirect_to(@question) unless current_user.author_of?(@question)
+
     if @question.update(question_params)
       redirect_to @question
     else
@@ -36,8 +40,20 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(@question)
-    redirect_to questions_path
+    if current_user.author_of?(@question)
+      @question.update(best_answer_id: nil)
+      @question.destroy
+      redirect_to questions_path
+    else
+      redirect_to @question, notice: 'Not author cant delete the question'
+    end
+  end
+
+  def set_the_best_answer
+    return redirect_to(@question) unless current_user.author_of?(@question)
+
+    @best_answer = Answer.find(params[:best_answer_id])
+    @question.update(best_answer: @best_answer)
   end
 
   private

@@ -90,7 +90,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    before { login(author) }
+    let(:author) { create(:user) }
+    let(:question) { create(:question, user: author) }
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
@@ -99,7 +101,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body'} }
         question.reload
 
         expect(question.title).to eq 'new title'
@@ -123,6 +125,16 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 're-render edit view' do
         expect(response).to render_template :edit
+      end
+    end
+
+    context 'Not valid author' do
+      before { login(user) }
+
+      it 'not update the question' do
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        expect(question).to have_attributes(title: 'MyString', body: 'MyString')
+        expect(response).to redirect_to assigns(:question)
       end
     end
   end
