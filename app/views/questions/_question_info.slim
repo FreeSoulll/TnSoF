@@ -1,0 +1,36 @@
+.question-info
+  h1= @question.title
+  p= @question.body
+
+  - if @question.files.attached?
+    .question-file-block
+      - @question.files.each do |file|
+        div class="file file-#{file.id}"
+          p= link_to file.filename.to_s, url_for(file)
+          = link_to 'x',
+                attached_file_path(question_id: @question.id, attached_file: file.id ),
+                method: :delete,
+                remote: true 
+
+  - if current_user&.author_of?(@question)
+    p= button_to 'Delete question',
+                question_path(@question),
+                method: :delete,
+                data: {confirm: 'Are you sure?'}
+
+    .edit-answer-block
+
+      p= link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+
+      = form_with model: @question, class: 'hidden', local: false, html: { id: "edit-question" } do |f|
+        p
+          = f.label :title, 'Question title'
+          = f.text_field :title
+        p
+          = f.label :body, 'Question body'
+          = f.text_area :body
+        p
+          = f.label :new_files, 'Question files'
+          = f.file_field :new_files, multiple: true, direct_upload: true
+
+        = f.submit 'Save question'

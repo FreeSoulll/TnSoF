@@ -1,7 +1,12 @@
 .answer-create-errors
 
 = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
-  = f.label :body
-  = f.text_area :body
+  p
+    = f.label :body
+    = f.text_area :body
+
+  p
+    = f.label :new_files, 'Add files'
+    = f.file_field :new_files, multiple: true, direct_upload: true
 
   p= f.submit 'Create answer'
