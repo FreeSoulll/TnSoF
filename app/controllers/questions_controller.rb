@@ -32,11 +32,7 @@ class QuestionsController < ApplicationController
   def update
     return redirect_to(@question) unless current_user.author_of?(@question)
 
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
   end
 
   def destroy
@@ -49,20 +45,13 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def set_the_best_answer
-    return redirect_to(@question) unless current_user.author_of?(@question)
-
-    @best_answer = Answer.find(params[:best_answer_id])
-    @question.update(best_answer: @best_answer)
-  end
-
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end

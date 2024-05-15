@@ -1,11 +1,6 @@
-h1= @question.title
-p= @question.body
-
-- if current_user&.author_of?(@question)
-  p= button_to 'Delete question',
-              question_path(@question),
-              method: :delete,
-              data: {confirm: 'Are you sure?'}
+.question
+  .question-errors
+  = render 'questions/question_info'
 
   .current-best-answer
     - if @question.best_answer_id.present?
@@ -13,11 +8,11 @@ p= @question.body
       span
         = @best_answer.body
 
-h2= 'Answers'
-.answers
-  = render partial: 'answers/answer', collection: @other_answers
+  h2= 'Answers'
+  .answers
+    = render partial: 'answers/answer', collection: @other_answers
 
-- if user_signed_in?
-  h3= 'Create answer'
-  = render 'answers/form'
+  - if user_signed_in?
+    h3= 'Create answer'
+    = render 'answers/form'
 

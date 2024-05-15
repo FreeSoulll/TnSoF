@@ -37,7 +37,9 @@ RSpec.configure do |config|
 
   Capybara.javascript_driver = :selenium_chrome_headless
 
-  Capybara.default_max_wait_time = 15
+  config.before(:each, js: true) do
+    Capybara.default_max_wait_time = 15
+  end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')
@@ -69,6 +71,10 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.after(:all) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
 end
 
 Shoulda::Matchers.configure do |config|

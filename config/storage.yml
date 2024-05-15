@@ -32,3 +32,12 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+yandex:
+  service: S3
+  access_key_id: <%= ENV['ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['SECRET_ACCESS_KEY'] %>
+  bucket: 'thinknetica-test'
+  region: ru-central1
+  endpoint: 'https://storage.yandexcloud.net'
+  force_path_style: true
