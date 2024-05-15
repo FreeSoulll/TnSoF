@@ -33,11 +33,11 @@ feature 'User can create', %q{
 
     scenario 'create a answer with attached file' do
       fill_in 'Body', with: 'text text'
-      attach_file 'Add files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'Add files', ["#{Rails.root}/spec/fixtures/files/test_file.txt", "#{Rails.root}/spec/fixtures/files/test_file_2.txt"]
       click_on 'Create answer'
 
-      expect(page).to have_link 'rails_helper.rb'
-      expect(page).to have_link 'spec_helper.rb'
+      expect(page).to have_link 'test_file.txt'
+      expect(page).to have_link 'test_file_2.txt'
     end
   end
 

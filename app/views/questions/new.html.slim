@@ -8,7 +8,7 @@
     = f.label :body
     = f.text_area :body
   p
-    = f.label :new_files, 'Question files'
-    = f.file_field :new_files, multiple: true, direct_upload: true
+    = f.label :files, 'Question files'
+    = f.file_field :files, multiple: true, direct_upload: true
 
   = f.submit 'Ask'

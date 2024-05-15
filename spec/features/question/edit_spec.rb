@@ -17,7 +17,7 @@ feature 'User can edit his question', %q{
 
   describe 'Author' do
     background do
-      question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'spec_helper_test.rb')
+      question.files.attach(io: File.open("#{Rails.root}/spec/fixtures/files/test_file.txt"), filename: 'spec_helper_test.rb')
       sign_in(author)
       visit question_path(question)
     end
@@ -27,14 +27,13 @@ feature 'User can edit his question', %q{
         click_on 'Edit question'
         fill_in 'Question title', with: 'Test question'
         fill_in 'Question body', with: 'edited question'
-        attach_file 'Question files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        attach_file 'Question files', ["#{Rails.root}/spec/fixtures/files/test_file.txt", "#{Rails.root}/spec/fixtures/files/test_file_2.txt"]
         click_on 'Save question'
 
         expect(page).to have_content 'Test question'
         expect(page).to have_content 'edited question'
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'spec_helper.rb'
-        expect(page).to have_link 'spec_helper_test.rb'
+        expect(page).to have_link 'test_file.txt'
+        expect(page).to have_link 'test_file_2.tx'
       end
     end
 
@@ -54,7 +53,7 @@ feature 'User can edit his question', %q{
         click_on 'x'
       end
 
-      expect(page).to_not have_link 'spec_helper_test'
+      expect(page).to_not have_link 'spec_helper_test.rb'
     end
   end
 

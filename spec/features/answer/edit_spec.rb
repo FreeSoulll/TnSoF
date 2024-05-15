@@ -5,8 +5,8 @@ feature 'User can edit his answer', %q{
   As an author of answer
   I'd like ot be able to edit my answer
 } do
-  given!(:author) { create(:user) }
-  given!(:user) { create(:user) }
+  given(:author) { create(:user) }
+  given(:user) { create(:user) }
   given!(:question) { create(:question, user: author) }
   given!(:answer) { create(:answer, question: question, user: author) }
 
@@ -18,7 +18,7 @@ feature 'User can edit his answer', %q{
 
   describe 'Author' do
     background do
-      answer.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'spec_helper_test.rb')
+      answer.files.attach(io: File.open("#{Rails.root}/spec/fixtures/files/test_file.txt"), filename: 'spec_helper_test.rb')
       sign_in(author)
       visit question_path(question)
     end
@@ -27,15 +27,14 @@ feature 'User can edit his answer', %q{
       within ".answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
-        attach_file 'Add files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        attach_file 'Add files', ["#{Rails.root}/spec/fixtures/files/test_file.txt", "#{Rails.root}/spec/fixtures/files/test_file_2.txt"]
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'spec_helper.rb'
-        expect(page).to have_link 'spec_helper_test.rb'
+        expect(page).to have_link 'test_file.txt'
+        expect(page).to have_link 'test_file_2.txt'
       end
     end
 
@@ -44,7 +43,7 @@ feature 'User can edit his answer', %q{
         click_on 'x'
       end
 
-      expect(page).to_not have_link 'spec_helper_test'
+      expect(page).to_not have_link 'spec_helper_test.rb'
     end
 
     scenario 'edits his answer with errors', js: true do

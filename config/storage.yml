@@ -35,8 +35,8 @@ local:
 
 yandex:
   service: S3
-  access_key_id: 'YCAJEDeSu-NiPd9PKBKWD5wFL'
-  secret_access_key: 'YCODTBti8P47_ITUu0jVfQnTYiq7ktPfg69goPKJ'
+  access_key_id: <%= ENV['ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['SECRET_ACCESS_KEY'] %>
   bucket: 'thinknetica-test'
   region: ru-central1
   endpoint: 'https://storage.yandexcloud.net'
