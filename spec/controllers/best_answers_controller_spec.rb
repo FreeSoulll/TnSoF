@@ -6,6 +6,7 @@ RSpec.describe BestAnswersController, type: :controller do
     let(:author) { create(:user) }
     let(:question) { create(:question, user: author) }
     let(:answer) { create(:answer, question: question, user: author) }
+    let!(:question_award) { create(:award, question: question) }
 
     context 'when author sets the best answer' do
       before do
@@ -16,6 +17,7 @@ RSpec.describe BestAnswersController, type: :controller do
 
       it 'make answer a best' do
         expect(question.best_answer_id).to eq(answer.id)
+        expect(question.award).to eq(question_award)
       end
     end
 

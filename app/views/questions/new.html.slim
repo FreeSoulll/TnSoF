@@ -11,4 +11,21 @@
     = f.label :files, 'Question files'
     = f.file_field :files, multiple: true, direct_upload: true
 
+  p Links: 
+  #question-tasks
+    = f.fields_for :links do |l|
+      = render 'links/link_fields', f: l
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+
+  p Award: 
+  .award-block
+    = f.fields_for :award do |l|
+      p 
+        = l.label :title, 'Award title'
+        = l.text_field :title
+      p
+        = l.label :image, 'Award image'
+        = l.file_field :image, direct_upload: true
+
   = f.submit 'Ask'

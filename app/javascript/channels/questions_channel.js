@@ -3,6 +3,11 @@ $(document).on('turbolinks:load', function() {
     e.preventDefault();
     $(this).hide();
     const editQuestionBlock = $('.edit-answer-block');
+    const editLinksBlock = $('#question-links .nested-fields');
+    editLinksBlock.not(':first').remove();
+    editLinksBlock.find('input').each(function() { $(this).val('') });
     editQuestionBlock.find('#edit-question').show();
   })
 });
+
+
