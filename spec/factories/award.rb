@@ -3,6 +3,9 @@ FactoryBot.define do
     title { 'Award title' }
     question
     user { nil }
-    image { Rack::Test::UploadedFile.new("#{Rails.root}/spec/fixtures/files/image.jpg") }
+
+    trait :with_image do
+      image { Rack::Test::UploadedFile.new("#{Rails.root}/spec/fixtures/files/image.jpg") }
+    end
   end
 end

@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   end
   resource :attached_file, only: [:destroy]
   resource :links, only: [:destroy]
-  get 'awards', to: 'awards#index'
+  resources :awards, only: [:index]
 end

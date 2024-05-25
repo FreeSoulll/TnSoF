@@ -11,11 +11,11 @@
               div class="content"
               p= 'author: '
               div class="author"
-            = javascript_pack_tag 'gist'
             = link_to 'x',
-                  attached_file_path(link_id: link.id),
-                  method: :delete,
-                  remote: true 
+                links_path(link_id: link.id),
+                method: :delete,
+                remote: true 
+            = javascript_pack_tag 'gist'
         - else
             = link_to link.name, link.url
             = link_to 'x',

@@ -1,6 +1,6 @@
 h2 = 'Your awards'
 
-- if current_user&.awards&.present?
+- if current_user.awards&.present?
   - current_user.awards.each do |award|
     h3 = "Question - #{award.question.title}"
     p = 'Award title'
