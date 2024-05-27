@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     resource :best_answer, only: [:create]
   end
   resource :attached_file, only: [:destroy]
+  resource :links, only: [:destroy]
+  resources :awards, only: [:index]
 end

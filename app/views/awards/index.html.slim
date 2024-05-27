@@ -1,0 +1,12 @@
+h2 = 'Your awards'
+
+- if current_user.awards&.present?
+  - current_user.awards.each do |award|
+    h3 = "Question - #{award.question.title}"
+    p = 'Award title'
+    p = award.title
+    = image_tag award.image.variant(resize_to_limit: [100, 100]).processed if award.image.attached? 
+    br
+- else 
+  h3= 'You dont have awards'
+

@@ -3,6 +3,10 @@ $(document).on('turbolinks:load', function() {
     e.preventDefault();
     $(this).hide();
     const answerId = $(this).data('answerId');
-    $('form#edit-answer-' + answerId).show();
+    const form = $('form#edit-answer-' + answerId)
+    const editLinksBlock = form.find('.answer-links .nested-fields');
+    editLinksBlock.not(':first').remove();
+    editLinksBlock.find('input').each(function() { $(this).val('') });
+    form.show();
   })
 });

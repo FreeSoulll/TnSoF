@@ -40,6 +40,19 @@ feature 'User can create', %q{
       expect(page).to have_link 'test_file.txt'
       expect(page).to have_link 'test_file_2.txt'
     end
+
+    scenario 'asks a question with create a award' do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text'
+
+      within '.award-block' do
+        fill_in 'Award title', with: 'Test award'
+        attach_file 'Award image', "#{Rails.root}/spec/fixtures/files/image.jpg"
+      end
+      click_on 'Ask'
+
+      expect(page).to have_content 'Test award'
+    end
   end
 
   scenario 'Unauthenticated user tries to asks a question' do

@@ -33,4 +33,13 @@
           = f.label :files, 'Question files'
           = f.file_field :files, multiple: true, direct_upload: true
 
+        p Links: 
+        #question-links
+          = f.fields_for :links do |l|
+            = render 'links/link_fields', f: l
+          .links
+            = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+
         = f.submit 'Save question'
+
+  = render 'links/links', resource: @question

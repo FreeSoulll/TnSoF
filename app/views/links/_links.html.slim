@@ -1,0 +1,24 @@
+.links
+  p Links:
+  ul
+    - resource.links.each do |link|
+      li class="link link-#{link.id}"
+        - if link.gist?
+            div class="gist" data={ gist_id:link.gist_token }
+              p= 'descritpion: '
+              div class="description"
+              p= 'content: '
+              div class="content"
+              p= 'author: '
+              div class="author"
+            = link_to 'x',
+                links_path(link_id: link.id),
+                method: :delete,
+                remote: true 
+            = javascript_pack_tag 'gist'
+        - else
+            = link_to link.name, link.url
+            = link_to 'x',
+                links_path(link_id: link.id),
+                method: :delete,
+                remote: true 

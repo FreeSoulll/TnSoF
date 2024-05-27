@@ -2,4 +2,5 @@ $('.question .question-errors').html('<%= render 'shared/errors', resource: @que
 
 <% if !@question.errors.present? %>
   $('.question-info').html('<%= j render 'question_info', resource: @question %>');
+  $('#question-links .nested-fields').not(':first').remove();
 <% end %>
