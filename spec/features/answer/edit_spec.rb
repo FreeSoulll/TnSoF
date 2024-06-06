@@ -5,12 +5,12 @@ feature 'User can edit his answer', %q{
   As an author of answer
   I'd like ot be able to edit my answer
 } do
-  given!(:author) { create(:user) }
-  given!(:user) { create(:user) }
-  given!(:question) { create(:question, user: author) }
-  given!(:answer) { create(:answer, question: question, user: author) }
+  given!(:author)      { create(:user) }
+  given!(:user)        { create(:user) }
+  given!(:question)    { create(:question, user: author) }
+  given!(:answer)      { create(:answer, question: question, user: author) }
   given!(:answer_link) { create(:link, linkable: answer) }
-  given(:gist_url) { 'https://github.com' }
+  given(:gist_url)     { 'https://github.com' }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)

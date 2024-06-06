@@ -9,4 +9,25 @@ $(document).on('turbolinks:load', function() {
     editLinksBlock.find('input').each(function() { $(this).val('') });
     form.show();
   })
+
+  $('form.new-answer').on('ajax:success', function(e) {
+    const answer = e.originalEvent.detail[0];
+    $(this).trigger("reset");
+
+    $('.answers').append(`
+    <div class='answer'>
+      <h3>Answer - ${answer.body}</h3>
+      <h3>Votes</h3>
+      <h4>Rating</h4>
+      <p class='rating-count-${answer.id}'>${answer.rating}</p>
+    </div>
+    `);
+  })
+    .on('ajax:error', function(e) {
+      const errors = e.originalEvent.detail[0];
+
+      $.each(errors, function(index, value) {
+        $(".answer-create-errors").append('<p>' + value + '</p>')
+      })
+    })
 });
