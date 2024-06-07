@@ -1,7 +1,8 @@
 - if answer.persisted?
   .answer class="answer-#{answer.id}"
-    p= answer.body
+    h3= "Answer - #{answer.body}"
 
+    = render 'votes/vote', resource: answer
     = render 'links/links', resource: answer 
 
     - if answer.files.attached?

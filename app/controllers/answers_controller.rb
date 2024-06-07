@@ -1,10 +1,22 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[edit update destroy]
 
   def create
-    @answer = @question.answers.create(answer_params.merge(user: current_user, question: @question))
+    @answer = @question.answers.new(answer_params.merge(user: current_user, question: @question))
+
+    respond_to do |format|
+      if @answer.save
+        format.json { render json: @answer }
+      else
+        format.json do
+          render json: @answer.errors.full_messages, status: :unprocessable_entity
+        end
+      end
+    end
   end
 
   def update
