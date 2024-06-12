@@ -2,6 +2,13 @@
   .question-errors
   = render 'questions/question_info'
 
+  div class="comments comments-question"
+    - if @question.comments.size > 0
+      h3= 'Comments'
+      = render partial: 'comments/comment', collection: @question.comments
+
+  -if current_user.present?
+    = render 'comments/form', resource: @question
 
   - if @question.award
     h3 = 'Question award:'

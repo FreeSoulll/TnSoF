@@ -2,8 +2,17 @@
   .answer class="answer-#{answer.id}"
     h3= "Answer - #{answer.body}"
 
+    -if current_user.present?
+      = render 'comments/form', resource: answer
+
     = render 'votes/vote', resource: answer
-    = render 'links/links', resource: answer 
+    - if @answer.links.size > 0
+      = render 'links/links', resource: answer
+
+    div class="comments comments-question"
+    - if @question.comments.size > 0
+      h3= 'Comments'
+      = render partial: 'comments/comment', collection: answer.comments
 
     - if answer.files.attached?
      .answers-file-block
