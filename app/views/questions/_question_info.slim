@@ -42,6 +42,8 @@
 
         = f.submit 'Save question'
 
-  = render 'links/links', resource: @question
+  - if @question.links.size > 0
+    = render 'links/links', resource: @question
 
   = render 'votes/vote', resource: @question
+

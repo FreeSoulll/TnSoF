@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include Votable
+  include Commentable
 
   has_many :answers, dependent: :destroy
   has_one :best_answer, class_name: 'Answer', dependent: :destroy

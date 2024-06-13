@@ -1,0 +1,8 @@
+- commentable_type = resource.class.name.downcase
+- path = send("add_comment_#{commentable_type}_path", resource)
+
+= form_with(url: path, method: :patch, class: "comment-#{resource.id}-form", data: { type: :json }, local: false)  do |f|
+  = f.label :body, 'Comment'
+  = f.text_area :body
+
+  = f.submit 'New comment'

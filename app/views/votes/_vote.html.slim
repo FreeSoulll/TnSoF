@@ -1,7 +1,6 @@
-h3= 'Votes'
-
-h4= 'Rating'
-p class="rating-count-#{resource.id}"= resource.rating
+.rating-block
+  span = 'Rating'
+  p class="rating-count-#{resource.id}"= resource.rating
 
 - if !current_user&.author_of?(resource) && user_signed_in?
   .vote

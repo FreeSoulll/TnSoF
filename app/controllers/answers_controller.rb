@@ -1,9 +1,12 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[edit update destroy]
+
+  after_action :publish_answer, only: %i[create]
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user, question: @question))
@@ -42,5 +45,12 @@ class AnswersController < ApplicationController
 
   def find_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("question_#{@question.id}_answers", @answer.to_json(include: :links)
+  )
   end
 end
