@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
 
   concern :votable do
@@ -22,6 +22,11 @@ Rails.application.routes.draw do
   resource :attached_file, only: [:destroy]
   resource :links, only: [:destroy]
   resources :awards, only: [:index]
+  resources :users do
+    collection do
+      post 'create_user'
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end

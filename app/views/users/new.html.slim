@@ -1,0 +1,9 @@
+h2= 'Email confirm'
+= render 'shared/errors', resource: @user
+
+= form_for @user, url: create_user_users_path, method: :post do |f|
+  p
+    = f.label :email
+    = f.email_field :email
+
+  = f.submit 'Confirm'

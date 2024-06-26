@@ -27,6 +27,7 @@ module Commented
   end
 
   def question_id
+    byebug
     @commentable.respond_to?(:question) ? @commentable.question.id : @commentable.id
   end
 
