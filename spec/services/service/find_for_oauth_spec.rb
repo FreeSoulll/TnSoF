@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Service::FindForOauth do
+RSpec.describe FindForOauthServices do
   let!(:user) { create(:user) }
   let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
-  subject { Service::FindForOauth.new(auth) }
+  subject { FindForOauthServices.new(auth) }
 
   context 'user already has authorization' do
     it 'returns the user' do

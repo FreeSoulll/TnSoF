@@ -22,11 +22,8 @@ Rails.application.routes.draw do
   resource :attached_file, only: [:destroy]
   resource :links, only: [:destroy]
   resources :awards, only: [:index]
-  resources :users do
-    collection do
-      post 'create_user'
-    end
-  end
+  get 'new_user', to: 'users#new', as: 'new_user'
+  post 'create_user', to: 'users#create', as: 'create_user'
 
   mount ActionCable.server => '/cable'
 end

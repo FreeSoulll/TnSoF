@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create_user
+  def create
     email = params[:user][:email]
     password = Devise.friendly_token[0, 20]
     @user = User.new(email: email, password: password, password_confirmation: password)
