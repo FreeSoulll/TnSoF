@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  include Voted
   include Commented
+  include Voted
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[create]

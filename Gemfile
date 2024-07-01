@@ -34,6 +34,11 @@ gem 'aws-sdk-s3', require: false
 gem "cocoon"
 gem 'image_processing', '~> 1.2'
 gem "gon"
+gem "omniauth"
+gem "omniauth-github"
+gem "omniauth-vkontakte"
+gem 'omniauth-rails_csrf_protection'
+gem 'capybara-email'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -41,6 +46,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.0'
   gem 'factory_bot_rails'
   gem 'dotenv'
+  gem "letter_opener"
 end
 
 group :development do
