@@ -4,7 +4,8 @@
       h2 = link_to question.title, question
       p = question.body
 
-p = link_to 'Ask question', new_question_path
+- if can?(:create, Question)
+  p = link_to 'Ask question', new_question_path
 
 
 - if user_signed_in?

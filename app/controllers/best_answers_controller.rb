@@ -1,4 +1,6 @@
 class BestAnswersController < ApplicationController
+  skip_authorization_check
+
   def create
     @question = Question.find(params[:question_id])
     return redirect_to(@question) unless current_user.author_of?(@question)

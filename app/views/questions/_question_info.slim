@@ -12,7 +12,7 @@
                 method: :delete,
                 remote: true 
 
-  - if current_user&.author_of?(@question)
+  - if can?(:destroy, @question)
     p= button_to 'Delete question',
                 question_path(@question),
                 method: :delete,

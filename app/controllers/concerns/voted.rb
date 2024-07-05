@@ -3,6 +3,8 @@ module Voted
 
   included do
     before_action :set_votable, only: %i[up_vote down_vote]
+
+    authorize_resource
   end
 
   def up_vote

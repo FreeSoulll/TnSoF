@@ -7,7 +7,7 @@
       h3= 'Comments'
       = render partial: 'comments/comment', collection: @question.comments
 
-  -if current_user.present?
+  - if can?(:add_comment, @question)
     = render 'comments/form', resource: @question
 
   - if @question.award

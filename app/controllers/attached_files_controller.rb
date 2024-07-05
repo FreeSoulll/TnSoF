@@ -1,5 +1,6 @@
 class AttachedFilesController < ApplicationController
   before_action :set_file, only: [:destroy]
+  skip_authorization_check
 
   def destroy
     record_type = @file.record_type.constantize

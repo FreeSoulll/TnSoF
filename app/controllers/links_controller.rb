@@ -1,4 +1,6 @@
 class LinksController < ApplicationController
+  skip_authorization_check
+
   def destroy
     @link = Link.find(params[:link_id])
     parent = @link.linkable_type.constantize
