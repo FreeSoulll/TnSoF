@@ -1,6 +1,4 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_authorization_check
-
   def github
     sign_in_user
   end

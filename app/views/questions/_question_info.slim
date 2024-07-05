@@ -7,10 +7,11 @@
       - @question.files.each do |file|
         div class="file file-#{file.id}"
           p= link_to file.filename.to_s, url_for(file)
-          = link_to 'x',
-                attached_file_path(question_id: @question.id, attached_file: file.id ),
-                method: :delete,
-                remote: true 
+          - if can?(:destroy, file)
+            = link_to 'x',
+                  attached_file_path(question_id: @question.id, attached_file: file.id ),
+                  method: :delete,
+                  remote: true 
 
   - if can?(:destroy, @question)
     p= button_to 'Delete question',

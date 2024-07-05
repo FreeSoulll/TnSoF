@@ -19,15 +19,16 @@
         - answer.files.each do |file|
           div class="file file-#{file.id}"
             p= link_to file.filename.to_s, url_for(file)
-            = link_to 'x',
-              attached_file_path(answer_id: answer.id, attached_file: file.id ),
-              method: :delete,
-              remote: true 
+            - if can?(:destroy, file)
+              = link_to 'x',
+                attached_file_path(answer_id: answer.id, attached_file: file.id ),
+                method: :delete,
+                remote: true 
 
     -if can?(:destroy, answer)
       p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-      -if can?(:destroy, @question)
+      -if can?(:create_best_answer, @question)
         = link_to 'Mark the best',
                 question_best_answer_path(@question, best_answer_id: answer.id ),
                 method: :post,

@@ -30,5 +30,13 @@ class Ability
     can [:up_vote, :down_vote, :add_vote], [Question, Answer] do |voteable|
       voteable.user_id != user.id
     end
+
+    can :destroy, Link, linkable: { user_id: user.id }
+    can :create_best_answer, Question do |question|
+      question.user_id == user.id
+    end
+    can :destroy, ActiveStorage::Attachment do |attachment|
+      user.author_of?(attachment.record)
+    end
   end
 end

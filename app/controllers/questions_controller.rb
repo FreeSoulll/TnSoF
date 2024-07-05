@@ -41,19 +41,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    return redirect_to(@question) unless current_user.author_of?(@question)
-
     @question.update(question_params)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.update(best_answer_id: nil)
-      @question.destroy
-      redirect_to questions_path
-    else
-      redirect_to @question, notice: 'Not author cant delete the question'
-    end
+    @question.update(best_answer_id: nil)
+    @question.destroy
+    redirect_to questions_path
   end
 
   private

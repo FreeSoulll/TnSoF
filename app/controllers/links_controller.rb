@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  skip_authorization_check
+  authorize_resource
 
   def destroy
     @link = Link.find(params[:link_id])
@@ -7,10 +7,6 @@ class LinksController < ApplicationController
     parent_id = @link.linkable_id
     resource = parent.find(parent_id)
 
-    if current_user.author_of?(resource)
-      @link.delete
-    else
-      redirect_to resource, notice: "Not author can't delete the #{@link.linkable_type} link"
-    end
+    @link.delete
   end
 end

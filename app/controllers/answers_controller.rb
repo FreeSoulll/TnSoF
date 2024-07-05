@@ -25,14 +25,12 @@ class AnswersController < ApplicationController
   end
 
   def update
-    return redirect_to(@answer.question) unless current_user.author_of?(@answer)
-
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    @answer.destroy
   end
 
   private
