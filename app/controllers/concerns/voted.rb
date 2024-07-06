@@ -3,11 +3,11 @@ module Voted
 
   included do
     before_action :set_votable, only: %i[up_vote down_vote]
+
+    authorize_resource
   end
 
   def up_vote
-    return if current_user.author_of?(@votable)
-
     vote = @votable.votes.find_by(user: current_user)
 
     if vote
@@ -20,8 +20,6 @@ module Voted
   end
 
   def down_vote
-    return if current_user.author_of?(@votable)
-
     vote = @votable.votes.find_by(user: current_user)
 
     if vote

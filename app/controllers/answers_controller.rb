@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user, question: @question))
 
@@ -23,14 +25,12 @@ class AnswersController < ApplicationController
   end
 
   def update
-    return redirect_to(@answer.question) unless current_user.author_of?(@answer)
-
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    @answer.destroy
   end
 
   private

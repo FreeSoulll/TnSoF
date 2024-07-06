@@ -2,7 +2,7 @@
   span = 'Rating'
   p class="rating-count-#{resource.id}"= resource.rating
 
-- if !current_user&.author_of?(resource) && user_signed_in?
+- if can?(:add_vote, resource)
   .vote
       = link_to 'Vote up', polymorphic_path(resource, action: :up_vote),
       method: :patch,

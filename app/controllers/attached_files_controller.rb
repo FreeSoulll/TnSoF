@@ -1,6 +1,8 @@
 class AttachedFilesController < ApplicationController
   before_action :set_file, only: [:destroy]
 
+  authorize_resource class: 'ActiveStorage::Attachment'
+
   def destroy
     record_type = @file.record_type.constantize
     purge_item = record_type.find(params[:question_id] || params[:answer_id])
