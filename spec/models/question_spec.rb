@@ -4,7 +4,7 @@ RSpec.describe Question, type: :model do
   describe 'associations' do
     it { should have_many(:answers) }
     it { should have_many(:answers).dependent(:destroy) }
-    it { should have_many(:links).dependent(:destroy) }
+    it_behaves_like 'Linkable'
     it { should have_one(:award).dependent(:destroy) }
   end
   describe 'validations' do
@@ -14,8 +14,6 @@ RSpec.describe Question, type: :model do
     it { should validate_presence_of :body }
     it { should have_many_attached(:files) }
 
-    it 'have one attached files' do
-      expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-    end
+    it_behaves_like 'Attachmentable'
   end
 end
