@@ -34,10 +34,10 @@ describe 'Profiles API', type: :request do
     end
   end
 
-  describe 'GET /api/v1/profiles/all_users' do
+  describe 'GET /api/v1/profiles' do
     it_behaves_like 'API Authorizable' do
       let(:method) { :get }
-      let(:api_path) { '/api/v1/profiles/all_users' }
+      let(:api_path) { '/api/v1/profiles' }
     end
 
     context 'authorized' do
@@ -47,7 +47,7 @@ describe 'Profiles API', type: :request do
       let!(:users) { create_list(:user, 3) }
       let(:user) { users.first }
 
-      before { get '/api/v1/profiles/all_users', params: { access_token: access_token.token }, headers: headers }
+      before { get '/api/v1/profiles', params: { access_token: access_token.token }, headers: headers }
 
       it 'returns 200 status' do
         expect(response).to be_successful

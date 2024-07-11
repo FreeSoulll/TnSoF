@@ -10,9 +10,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :profiles, only: [] do
+      resources :profiles, only: [:index] do
         get :me, on: :collection
-        get :all_users, on: :collection
       end
       resources :questions, shallow: true do
         resources :answers
