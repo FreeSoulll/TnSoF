@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { should belong_to(:question) }
-    it { should have_many(:links).dependent(:destroy) }
+    it_behaves_like 'Linkable'
   end
 
   describe 'validations' do
@@ -11,8 +11,6 @@ RSpec.describe Answer, type: :model do
     it { should have_many_attached(:files) }
     it { should accept_nested_attributes_for :links }
 
-    it 'have one attached files' do
-      expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-    end
+    it_behaves_like 'Attachmentable'
   end
 end
