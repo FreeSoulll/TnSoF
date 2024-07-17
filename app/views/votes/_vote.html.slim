@@ -1,20 +1,18 @@
-.rating-block
+.rating-block.d-flex.flex-row.gap-1
   span = 'Rating'
   p class="rating-count-#{resource.id}"= resource.rating
 
 - if can?(:add_vote, resource)
-  .vote
+  .vote.btn-group
       = link_to 'Vote up', polymorphic_path(resource, action: :up_vote),
       method: :patch,
-      class: "vote-up",
+      class: "vote-up btn btn-success",
       data: { type: :json },
       remote: true
 
 
       = link_to 'Vote down', polymorphic_path(resource, action: :down_vote),
       method: :patch,
-      class: "vote-down",
+      class: "vote-down btn btn-danger",
       data: { type: :json },
       remote: true
-
-

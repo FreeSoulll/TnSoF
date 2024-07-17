@@ -1,14 +1,9 @@
-.questions-list
-  - @questions.each do |question|
-    .question
-      h2 = link_to question.title, question
-      p = question.body
-
 - if can?(:create, Question)
-  p = link_to 'Ask question', new_question_path
+  = link_to 'Ask question', new_question_path, class: 'btn btn-primary mb-3'
 
-
-- if user_signed_in?
-  p = link_to 'Log out', destroy_user_session_path, method: :delete
-- else 
-  p = link_to 'Register', new_user_registration_path
+ul.p-0
+  li.questions-list.list-group
+    - @questions.each do |question|
+      .list-group-item
+        .fw-bold = link_to question.title, question
+        p = question.body

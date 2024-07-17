@@ -7,6 +7,8 @@ class Question < ApplicationRecord
   belongs_to :user
   has_one :award, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :subscriptions
+  has_many :subscribed_questions, through: :subscriptions, source: :question
 
   has_many_attached :files
 
@@ -14,4 +16,15 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :award, reject_if: :all_blank
 
   validates :title, :body, presence: true
+
+  after_create :set_subscribe
+
+  scope :last_day, -> { where(created_at: 24.hours.ago..Time.current) }
+
+  private
+
+  def set_subscribe
+    subscribe = subscriptions.create(user: user)
+    subscribe.save
+  end
 end

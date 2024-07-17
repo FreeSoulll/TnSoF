@@ -1,24 +1,24 @@
 .answer-create-errors
 
-= form_with model: [@question, @answer], class: 'new-answer', data: { type: :json }, local: false do |f|
-  p
-    = f.label :body
-    = f.text_area :body
+= form_with model: [@question, @answer], class: 'new-answer col-6', data: { type: :json }, local: false do |f|
+  .form-group
+    = f.label :body, class: 'form-label'
+    = f.text_area :body, class: 'form-control'
 
-  p
-    = f.label :files, 'Add files'
-    = f.file_field :files, multiple: true, direct_upload: true
+  .form-group
+    = f.label :files, 'Add files', class: 'form-label'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control form-control-file'
 
-
-  p Links: 
+  .form-group
+    p Links:
 
   #answer-tasks
     = f.fields_for :links do |l|
       = render 'links/link_fields', f: l
     .links
-      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields', class: 'btn btn-secondary mt-2 mb-3'
 
-  p= f.submit 'Create answer'
+  .form-group
+    = f.submit 'Create answer', class: 'btn btn-primary'
 
-
-  = link_to 'Back', questions_path, remote: true
+  = link_to 'Back', questions_path, class: 'btn btn-link mt-5'

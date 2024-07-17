@@ -1,0 +1,5 @@
+<% if @question.subscriptions.exists?(user: current_user) %>
+  $(".subscribes").html("<%= j button_to 'Unsubscribe', question_subscription_path(@question), method: :delete, class: 'btn btn-secondary', remote: true %>");
+<% else %>
+  $(".subscribes").html("<%= j button_to 'Subscribe', question_subscription_path(@question), method: :post, class: 'btn btn-primary', remote: true %>");
+<% end %>
