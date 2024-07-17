@@ -8,7 +8,7 @@ class Question < ApplicationRecord
   has_one :award, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
   has_many :subscriptions
-  has_many :subscribed_questions, through: :subscriptions, source: :question
+  has_many :subscribers, through: :subscriptions, source: :user, dependent: :destroy
 
   has_many_attached :files
 

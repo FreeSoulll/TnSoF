@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
   has_many :subscriptions
-  has_many :subscribers, through: :subscriptions, source: :user
+  has_many :subscribed_questions, through: :subscriptions, source: :question, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
