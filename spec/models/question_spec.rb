@@ -6,6 +6,7 @@ RSpec.describe Question, type: :model do
     it { should have_many(:answers).dependent(:destroy) }
     it_behaves_like 'Linkable'
     it { should have_one(:award).dependent(:destroy) }
+    it { should have_many(:subscriptions) }
   end
   describe 'validations' do
     it { should accept_nested_attributes_for :links }

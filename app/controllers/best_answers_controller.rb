@@ -1,5 +1,5 @@
 class BestAnswersController < ApplicationController
-  authorize_resource
+  skip_authorization_check only: %i[create]
 
   def create
     @question = Question.find(params[:question_id])

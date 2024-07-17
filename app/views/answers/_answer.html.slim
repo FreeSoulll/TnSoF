@@ -1,59 +1,66 @@
 - if can?(:create, Answer)
   .answer class="answer-#{answer.id}"
-    h3= "Answer - #{answer.body}"
-
-    -if can?(:add_comment, @question)
+    .row.mb-4
+      .col-8.d-flex.align-items-end
+        h3 Answer - #{answer.body}
+      
+      .col-4.d-flex.flex-column.align-items-end
+        = render 'votes/vote', resource: answer
+    
+    - if can?(:add_comment, @question)
       = render 'comments/form', resource: answer
 
-    = render 'votes/vote', resource: answer
-    - if @answer.links.size > 0
+
+    - if @answer&.links.any?
       = render 'links/links', resource: answer
 
-    div class="comments comments-question"
-    - if @question.comments.size > 0
-      h3= 'Comments'
-      = render partial: 'comments/comment', collection: answer.comments
+    .comments.comments-question
+      - if @question.comments.any?
+        h3 Comments
+        = render partial: 'comments/comment', collection: answer.comments
 
     - if answer.files.attached?
-     .answers-file-block
+      .answers-file-block
         - answer.files.each do |file|
-          div class="file file-#{file.id}"
-            p= link_to file.filename.to_s, url_for(file)
+          div class="file file-#{file.id} d-flex flex-row gap-2"
+            p.m-0= link_to file.filename.to_s, url_for(file)
             - if can?(:destroy, file)
-              = link_to 'x',
-                attached_file_path(answer_id: answer.id, attached_file: file.id ),
-                method: :delete,
-                remote: true 
+              = link_to 'x', 
+                  attached_file_path(answer_id: answer.id, attached_file: file.id),
+                  method: :delete, 
+                  remote: true, 
+                  class: 'btn btn-danger btn-sm'
 
-    -if can?(:destroy, answer)
-      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+    - if can?(:destroy, answer)
+      p= link_to 'Edit', '#', class: 'btn btn-primary edit-answer-link', data: { answer_id: answer.id }
 
-      -if can?(:create_best_answer, @question)
+      - if can?(:create_best_answer, @question)
         = link_to 'Mark the best',
-                question_best_answer_path(@question, best_answer_id: answer.id ),
-                method: :post,
-                remote: true 
+                  question_best_answer_path(@question, best_answer_id: answer.id),
+                  method: :post, remote: true, class: 'btn btn-success'
 
       .errors
-      = form_with model: answer, class: 'hidden', local: false, html: { id: "edit-answer-#{answer.id}" } do |f|
-        p
-          = f.label :body, 'Your answer'
-          = f.text_area :body
-        
-        p
-          = f.label :files, 'Add files'
-          = f.file_field :files, multiple: true, direct_upload: true
+      = form_with model: answer, class: 'visually-hidden', local: false, html: { id: "edit-answer-#{answer.id}" } do |f|
+        .form-group
+          = f.label :body, 'Your answer', class: 'form-label'
+          = f.text_area :body, class: 'form-control'
 
-        p Links: 
-        .answer-links
-          = f.fields_for :links do |l|
-            = render 'links/link_fields', f: l
-          .links
-            = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+        .form-group
+          = f.label :files, 'Add files', class: 'form-label'
+          = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
 
-        p= f.submit 'Save'
+        .form-group
+          p Links:
+          .answer-links
+            = f.fields_for :links do |l|
+              = render 'links/link_fields', f: l
+            .links
+              = link_to_add_association 'add link', f, :links, partial: 'links/link_fields', class: 'btn btn-secondary'
+
+        = f.submit 'Save', class: 'btn btn-primary'
 
       p= button_to 'Delete answer',
-              answer_path(answer),
-              remote: true,
-              method: :delete
+                   answer_path(answer),
+                   remote: true,
+                   method: :delete,
+                   class: 'btn btn-danger'

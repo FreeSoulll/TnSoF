@@ -1,24 +1,22 @@
-.links
+.links.mb-2.mt-4
   p Links:
-  ul
+  ul.list-group
     - resource.links.each do |link|
-      li class="link link-#{link.id}"
+      li class="list-group-item link-#{link.id}"
         - if link.gist?
-            div class="gist" data={ gist_id:link.gist_token }
-              p= 'descritpion: '
-              div class="description"
-              p= 'content: '
-              div class="content"
-              p= 'author: '
-              div class="author"
-            = link_to 'x',
-                links_path(link_id: link.id),
-                method: :delete,
-                remote: true 
-            = javascript_pack_tag 'gist'
+          .gist data={ gist_id: link.gist_token }
+            p.description Description:
+            div.description= ''
+            p.content Content:
+            div.content= ''
+            p.author Author:
+            div.author= ''
+          = link_to 'x', 
+              links_path(link_id: link.id), 
+              method: :delete, remote: true, class: 'btn btn-danger btn-sm float-right'
+          = javascript_pack_tag 'gist'
         - else
-            = link_to link.name, link.url
-            = link_to 'x',
-                links_path(link_id: link.id),
-                method: :delete,
-                remote: true 
+          = link_to link.name, link.url, class: 'mr-2'
+          = link_to 'x', 
+              links_path(link_id: link.id), 
+              method: :delete, remote: true, class: 'btn btn-danger btn-sm float-right'

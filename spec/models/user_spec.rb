@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of :password }
   it { should have_many(:awards) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions) }
 
   describe '.find_for_ouath' do
     let!(:user) { create(:user) }
@@ -12,7 +13,7 @@ RSpec.describe User, type: :model do
     let(:service) { double('FindForOauthServices') }
 
     it 'calls FindForOauthServices' do
-      expect(Service::FindForOauth).to receive(:new).with(auth).and_return(service)
+      expect(FindForOauthService).to receive(:new).with(auth).and_return(service)
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
     end

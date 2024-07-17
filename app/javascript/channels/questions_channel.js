@@ -9,7 +9,7 @@ $(document).on('turbolinks:load', function() {
     const editLinksBlock = $('#question-links .nested-fields');
     editLinksBlock.not(':first').remove();
     editLinksBlock.find('input').each(function() { $(this).val('') });
-    editQuestionBlock.find('#edit-question').show();
+    editQuestionBlock.find('#edit-question').toggleClass('visually-hidden');
   })
 
 

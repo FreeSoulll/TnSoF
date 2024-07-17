@@ -11,4 +11,12 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 
   validates :body, presence: true
+
+  after_create :notify_subscriber
+
+  private
+
+  def notify_subscriber
+    NotifySubscriberJob.perform_later(self, question)
+  end
 end

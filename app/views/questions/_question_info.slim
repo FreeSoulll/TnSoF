@@ -1,50 +1,84 @@
-.question-info
-  h1= @question.title
-  p= @question.body
+.question-info.container
+  .row.mb-4
+    .col-8
+      h1= @question.title
+      p.lead= @question.body
+    
+    .col-4.d-flex.flex-column.align-items-end
+      = render 'votes/vote', resource: @question
+      .row.mt-4
+        .col-12
+          .subscribes
+            - unless @question.subscriptions.find_by(user: current_user)
+              = button_to 'Subscribe',
+                          question_subscription_path(@question),
+                          method: :create,
+                          remote: true,
+                          class: 'btn btn-primary'
+            - else
+              = button_to 'Unsubscribe',
+                          question_subscription_path(@question),
+                          method: :delete,
+                          remote: true,
+                          class: 'btn btn-secondary'
 
   - if @question.files.attached?
-    .question-file-block
-      - @question.files.each do |file|
-        div class="file file-#{file.id}"
-          p= link_to file.filename.to_s, url_for(file)
-          - if can?(:destroy, file)
-            = link_to 'x',
-                  attached_file_path(question_id: @question.id, attached_file: file.id ),
-                  method: :delete,
-                  remote: true 
+    .row.mt-3
+      .col-12
+        .question-file-block
+          - @question.files.each do |file|
+            div class="file file-#{file.id} mb-2 d-flex flex-row gap-2"
+              p
+                = link_to file.filename.to_s, url_for(file), class: 'btn btn-link'
+                
+                - if can?(:destroy, file)
+                  = link_to 'x',
+                        attached_file_path(question_id: @question.id, attached_file: file.id),
+                        method: :delete,
+                        remote: true,
+                        class: 'btn btn-danger btn-sm ml-2',
+                        data: { confirm: 'Are you sure?' }
 
   - if can?(:destroy, @question)
-    p= button_to 'Delete question',
-                question_path(@question),
-                method: :delete,
-                data: {confirm: 'Are you sure?'}
-
-    .edit-answer-block
-
-      p= link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: @question.id }
-
-      = form_with model: @question, class: 'hidden', local: false, html: { id: "edit-question" } do |f|
+    .row.mt-3
+      .col-12
         p
-          = f.label :title, 'Question title'
-          = f.text_field :title
-        p
-          = f.label :body, 'Question body'
-          = f.text_area :body
-        p
-          = f.label :files, 'Question files'
-          = f.file_field :files, multiple: true, direct_upload: true
+          = button_to 'Delete question',
+                      question_path(@question),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: 'btn btn-danger'
 
-        p Links: 
-        #question-links
-          = f.fields_for :links do |l|
-            = render 'links/link_fields', f: l
-          .links
-            = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+    .edit-answer-block.row.mt-3
+      .col-12
+        p
+          = link_to 'Edit question', '#', class: 'btn btn-primary edit-question-link', data: { question_id: @question.id }
 
-        = f.submit 'Save question'
+        = form_with model: @question, class: 'visually-hidden mt-3', local: false, html: { id: "edit-question" } do |f|
+          .form-group
+            = f.label :title, 'Question title'
+            = f.text_field :title, class: 'form-control'
+          
+          .form-group
+            = f.label :body, 'Question body'
+            = f.text_area :body, class: 'form-control'
+          
+          .form-group
+            = f.label :files, 'Question files'
+            = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control form-control-file'
+
+          .form-group
+            p Links:
+            #question-links
+              = f.fields_for :links do |l|
+                = render 'links/link_fields', f: l
+
+              .links.mt-3
+                = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields', class: 'btn btn-secondary'
+
+          = f.submit 'Save question', class: 'btn btn-success mt-3'
 
   - if @question.links.size > 0
-    = render 'links/links', resource: @question
-
-  = render 'votes/vote', resource: @question
-
+    .row.mt-3
+      .col-12
+        = render 'links/links', resource: @question
