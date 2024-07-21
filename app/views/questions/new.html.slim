@@ -1,31 +1,34 @@
 = render 'shared/errors', resource: @question
 
-= form_with model: @question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title
-  p
-    = f.label :body
-    = f.text_area :body
-  p
-    = f.label :files, 'Question files'
-    = f.file_field :files, multiple: true, direct_upload: true
+h2.pb-4 New question
 
-  p Links: 
+= form_with model: @question, class: 'new-question col-6', local: true do |f|
+  .form-group
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :body, class: 'form-label'
+    = f.text_area :body, class: 'form-control'
+  .form-group
+    = f.label :files, 'Question files', class: 'form-label'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+
+  .form-group.pt-4
+    h4 Links:
   #question-tasks
     = f.fields_for :links do |l|
       = render 'links/link_fields', f: l
     .links
-      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields', class: 'btn btn-secondary mt-2 mb-3'
 
-  p Award: 
+  h4 Award: 
   .award-block
     = f.fields_for :award do |l|
       p 
-        = l.label :title, 'Award title'
-        = l.text_field :title
+        = l.label :title, 'Award title', class: 'form-label'
+        = l.text_field :title, class: 'form-control'
       p
-        = l.label :image, 'Award image'
-        = l.file_field :image, direct_upload: true
+        = l.label :image, 'Award image', class: 'form-label'
+        = l.file_field :image, direct_upload: true, class: 'form-control'
 
-  = f.submit 'Ask'
+  = f.submit 'Ask', class: 'btn btn-primary'

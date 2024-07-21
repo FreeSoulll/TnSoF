@@ -21,6 +21,9 @@ html lang="en"
       .container
         .d-flex.justify-content-between
           a.navbar-brand href="/"Qna
+
+          = render 'searches/form'
+
           ul.nav.navbar-nav
             - if user_signed_in?
               li= link_to "Log out", destroy_user_session_path, method: :delete
@@ -33,5 +36,5 @@ html lang="en"
           = yield
 
 
-      footer
+      footer.border-top.mt-5
         p &copy; Thinknetica

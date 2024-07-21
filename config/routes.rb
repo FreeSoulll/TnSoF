@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   resource :attached_file, only: [:destroy]
   resource :links, only: [:destroy]
   resources :awards, only: [:index]
+  get 'search', to: 'searches#index', as: 'search_index'
   get 'new_user', to: 'users#new', as: 'new_user'
   post 'create_user', to: 'users#create', as: 'create_user'
 
