@@ -1,0 +1,27 @@
+h1.pb-5 Search results
+- if @search_results.present?
+
+  ul.list-group
+    - @search_results.each do |result|
+        li.list-group-item
+          - if result.is_a?(Question)
+            div.fw-bold Question
+            == link_to result.title, question_path(result)
+          
+          - elsif result.is_a?(User)
+            p.fw-bold User
+            p= result.email
+          
+          - elsif result.is_a?(Answer)
+            p.fw-bold Answer
+            p= result.body
+
+            div 
+              p == "Answer for Question - #{link_to result.question.title, question_path(result.question)}"
+          - elsif result.is_a?(Comment)
+            p == "Comment on #{result.commentable_type}"
+            p= result.body 
+
+
+- else 
+  p= 'No results found'
