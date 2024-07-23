@@ -17,7 +17,7 @@
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
-    "node-sass": "^5.0.0"
+    "node-sass": "^7.0.0"
   },
   "version": "0.1.0",
   "devDependencies": {
