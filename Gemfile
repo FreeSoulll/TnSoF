@@ -26,8 +26,8 @@ gem 'redis', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.4', require: false
-gem 'sassc-rails'
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'sassc-rails', '>= 2.1.2'
 gem 'bootstrap', '~> 4.1.1'
 gem 'slim-rails'
 gem 'devise'
