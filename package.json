@@ -13,7 +13,7 @@
     "gist-client": "^1.1.1",
     "jquery": "^3.7.1",
     "popper.js": "^1.16.1",
-    "sass": "1.26.5",
+    "sass": "1.38.0",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
@@ -24,8 +24,5 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "webpack-dev-server": "^3"
-  },
-  "resolutions": {
-    "sass": "1.26.5"
   }
 }
