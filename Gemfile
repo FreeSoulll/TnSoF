@@ -52,6 +52,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem "database_cleaner-active_record", "~> 2.0"
 gem 'mini_racer'
+gem 'base64', '0.2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
