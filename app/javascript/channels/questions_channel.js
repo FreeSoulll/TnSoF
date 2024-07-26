@@ -1,4 +1,5 @@
 import consumer from './consumer'
+import $ from 'jquery'
 
 $(document).on('turbolinks:load', function() {
   const questionsList = $('.questions-list');
