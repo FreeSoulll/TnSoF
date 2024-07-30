@@ -52,6 +52,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem "database_cleaner-active_record", "~> 2.0"
 gem 'mini_racer'
+gem 'base64', '0.1.1'
 gem 'ffi', '< 1.17.0'
 gem 'capistrano', require: false
 gem 'capistrano-bundler', require: false
