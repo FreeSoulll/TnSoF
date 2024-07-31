@@ -60,7 +60,6 @@ gem 'capistrano-rails', require: false
 gem 'capistrano-rvm'
 gem 'capistrano-passenger', require: false
 gem 'capistrano-dotenv', require: false
-gem 'capistrano-sidekiq', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
