@@ -2,8 +2,9 @@
   = link_to 'Ask question', new_question_path, class: 'btn btn-primary mb-3'
 
 ul.p-0
-  li.questions-list.list-group
-    - @questions.each do |question|
-      .list-group-item
-        .fw-bold = link_to question.title, question
-        p = question.body
+  -cache collection_cache_key_for :question do
+    li.questions-list.list-group
+      - @questions.each do |question|
+        .list-group-item
+          .fw-bold = link_to question.title, question
+          p = question.body

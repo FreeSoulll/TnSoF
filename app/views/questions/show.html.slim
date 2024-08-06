@@ -1,45 +1,46 @@
-.question.container
-  .row
-    .col-12
-      .question-errors
-      = render 'questions/question_info'
+- cache @question do
+  .question.container
+    .row
+      .col-12
+        .question-errors
+        = render 'questions/question_info'
 
-  .row.mt-4
-    .col-12
-      .comments.comments-question
-        - if @question.comments.size > 0
-          h3= 'Comments'
-          = render partial: 'comments/comment', collection: @question.comments
-
-  .row.mt-4
-    .col-12
-      - if can?(:add_comment, @question)
-        = render 'comments/form', resource: @question
-
-  .row.mt-4
-    .col-12
-      - if @question.award
-        h3= 'Question award:'
-        p= @question.award.title
-        p
-          = image_tag @question.award.image.variant(resize_to_limit: [100, 100]).processed,
-                       class: 'img-thumbnail' if @question.award.image.attached?
-
-  .row.mt-4
-    .col-12
-      .current-best-answer
-        - if @question.best_answer_id.present?
-          h3= 'BEST ANSWER'
-          span= @best_answer.body
-
-  .row.mt-4
-    .col-12
-      h2= 'Answers'
-      .answers
-        = render partial: 'answers/answer', collection: @other_answers
-
-  - if user_signed_in?
     .row.mt-4
       .col-12
-        h3= 'Create answer'
-        = render 'answers/form'
+        .comments.comments-question
+          - if @question.comments.size > 0
+            h3= 'Comments'
+            = render partial: 'comments/comment', collection: @question.comments
+
+    .row.mt-4
+      .col-12
+        - if can?(:add_comment, @question)
+          = render 'comments/form', resource: @question
+
+    .row.mt-4
+      .col-12
+        - if @question.award
+          h3= 'Question award:'
+          p= @question.award.title
+          p
+            = image_tag @question.award.image.variant(resize_to_limit: [100, 100]).processed,
+                        class: 'img-thumbnail' if @question.award.image.attached?
+
+    .row.mt-4
+      .col-12
+        .current-best-answer
+          - if @question.best_answer_id.present?
+            h3= 'BEST ANSWER'
+            span= @best_answer.body
+
+    .row.mt-4
+      .col-12
+        h2= 'Answers'
+        .answers
+          = render partial: 'answers/answer', collection: @other_answers
+
+    - if user_signed_in?
+      .row.mt-4
+        .col-12
+          h3= 'Create answer'
+          = render 'answers/form'

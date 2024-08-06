@@ -55,6 +55,7 @@ gem 'mini_racer'
 gem 'base64', '0.1.1'
 gem 'ffi', '< 1.17.0'
 gem 'unicorn'
+gem 'redis-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
