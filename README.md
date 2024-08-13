@@ -1,24 +1,85 @@
-# README
+# Questions and Answers Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app based on main idea of stackoverflow: people can ask questions and create answers for them, created for lerning how some gems and technologies works.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- **Real-time Updates**: Actions mostly work without reload (AJAX). New records appear on the page without reload for all users.
 
-* System dependencies
+## Authentication
 
-* Configuration
+- `devise`
+- `omniauth`
+  - `omniauth-github`
+  - `omniauth-vkontakte`
 
-* Database creation
+## Authorization with Policies
 
-* Database initialization
+- `cancancan`
 
-* How to run the test suite
+## REST API
 
-* Services (job queues, cache servers, search engines, etc.)
+- `active_model_serializers`
+- `doorkeeper`
 
-* Deployment instructions
+## Attach Files to Questions/Answers
 
-* ...
+- `aws-sdk-s3`
+
+## Background Jobs (e.g., Email)
+
+- `active job`
+- `sidekiq`
+- `whenever`
+
+## Redis
+
+- **For Sidekiq and Caching**
+  - Fragment caching (Russian doll caching)
+  - `redis-rails`
+
+## Sphinx Search (Full-text Search)
+
+- `thinking-sphinx`
+
+## Test Driven Development
+
+Application is fully covered by tests: **496 specs**
+
+- `rspec-rails`
+- `factory_bot_rails`
+- `shoulda-matchers`
+
+## Feature (Acceptance) Testing with JS
+
+- `capybara`
+
+## Views
+
+- `slim-rails`
+- `bootstrap`
+
+## Nested Forms
+
+- `cocoon`
+
+## Database
+
+- `pg`
+
+## Deployment
+
+- `capistrano`
+
+## Production Webserver
+
+- `unicorn`
+- `passenger`
+
+## Services (Job Queues, Cache Servers, Search Engines, etc.)
+
+- Postgres
+- Redis
+- Sidekiq
+- WebSockets
+- Sphinx
